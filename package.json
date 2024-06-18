@@ -1,0 +1,20 @@
+{
+  "devDependencies": {
+    "tailwindcss": "^3.4.4"
+  },
+  "name": "youtubeweb",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "ytdl-core": "^4.11.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "npx tailwindcss -i ./src/in.css -o ./src/out.css --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
