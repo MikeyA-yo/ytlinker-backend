@@ -13,8 +13,9 @@ app.get("/", async (req, res)=>{
         let  detail = await yt.getBasicInfo(req.query.link)
         let relatedDetails = detail.videoDetails
         let length = relatedDetails.lengthSeconds;
+        let image = relatedDetails.thumbnail
         let title = relatedDetails.title
-        res.json({title, length })
+        res.json({title, length, image })
       }else{
         res.send("yes")
       }
