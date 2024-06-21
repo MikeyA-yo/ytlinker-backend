@@ -8,17 +8,39 @@ const corsOption = {
     origin:"http://localhost:5173/"
 }
 app.use(cors())
+
+function genTimeStamp(time){
+    let hour;
+    let minutes;
+    let seconds;
+    function timeRec(time){
+        if (time >= 3600){
+            hour = Math.floor(time/3600)
+            hour = hour > 9 ? hour : `0${hour}`
+            return timeRec(time % 3600)
+           // let reminder = time % 3600
+          }else if(time >= 60 && time < 3600){
+              minutes = Math.floor(time/60)
+              minutes = minutes > 9 ? minutes : `0${minutes}`
+              return timeRec(time % 60)
+          }else{
+              seconds = time > 9 ? time : `0${time}`
+              return `${hour  ?? "00"} : ${minutes ?? "00"} : ${seconds  ?? "00"}`
+          }
+    }
+    return timeRec(time)
+}
 app.get("/", async (req, res)=>{
     if(req.query.link){
        try {
         let  detail = await yt.getBasicInfo(req.query.link)
         let relatedDetails = detail.videoDetails
-        let length = relatedDetails.lengthSeconds;
+        let timestamp = genTimeStamp(parseInt(relatedDetails.lengthSeconds));
         let image = relatedDetails.thumbnails
         let title = relatedDetails.title
-        res.json({title, length, image })
+        res.json({title, timestamp, image })
        } catch (err) {
-        
+        console.log(err.message)
        }
       }else{
         res.send("yes")
