@@ -10,12 +10,16 @@ const corsOption = {
 app.use(cors())
 app.get("/", async (req, res)=>{
     if(req.query.link){
+       try {
         let  detail = await yt.getBasicInfo(req.query.link)
         let relatedDetails = detail.videoDetails
         let length = relatedDetails.lengthSeconds;
-        let image = relatedDetails.thumbnail
+        let image = relatedDetails.thumbnails
         let title = relatedDetails.title
         res.json({title, length, image })
+       } catch (err) {
+        
+       }
       }else{
         res.send("yes")
       }
