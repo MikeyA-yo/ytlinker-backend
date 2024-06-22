@@ -67,12 +67,13 @@ function genRandom(len){
     return res;
 }
 let filename = `${genRandom(12)}.mp4`
-console.log(filename)
 app.get("/download", (req, res)=>{
     console.log(req.query)
     if(req.query.link){
         const {link} = req.query
-        const stream = yt(link, { filter: 'audioandvideo'})
+        const filter = req.query.filter === 'mp3' ? 'audioonly':'audioandvideo' ;
+        const stream = yt(link, { filter: filter})
+        filename = filter === 'audioandvideo' ? filename : filename.replace('.mp4', '.mp3') ;
         const writeStream = fs.createWriteStream(filename)
         stream.pipe(writeStream)
         .on("finish",()=>{
