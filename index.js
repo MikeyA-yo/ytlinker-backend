@@ -73,7 +73,7 @@ app.get("/download", (req, res)=>{
         const {link} = req.query
         const filter = req.query.filter === 'mp3' ? 'audioonly':'audioandvideo' ;
         const stream = yt(link, { filter: filter})
-        filename = filter === 'audioandvideo' ? filename : filename.replace('.mp4', '.mp3') ;
+        filename = filter === 'audioandvideo' ? filename : filename.replace('.mp4', '.mp3');
         const writeStream = fs.createWriteStream(filename)
         stream.pipe(writeStream)
         .on("finish",()=>{
@@ -93,7 +93,8 @@ app.get("/download", (req, res)=>{
 })
 app.get("/sizeDetails", async (req, res) =>{
     if(req.query.link){
-        let  stream =  yt(req.query.link, {filter:'audioandvideo'});
+        const filter = req.query.filter === 'mp3' ? 'audioonly':'audioandvideo' ;
+        const stream = yt(link, { filter: filter})
         let bytes = 0
         stream.on("data", (chunk)=>{
             bytes += chunk.length;
