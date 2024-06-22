@@ -30,6 +30,17 @@ function genTimeStamp(time){
     }
     return timeRec(time)
 }
+function formatBytes(bytes, decimals = 2) {
+    if (!+bytes) return '0 Bytes'
+
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}
 app.get("/", async (req, res)=>{
     if(req.query.link){
        try {
@@ -79,13 +90,19 @@ app.get("/download", (req, res)=>{
     }
    
 })
-// app.get("/details", async (req, res) =>{
-//     if(req.query.link){
-//         let  detail = await yt.getBasicInfo(req.query.link)
-//         let relatedDetails = detail.videoDetails
-//         console.log(relatedDetails)
-//       }
-// })
+app.get("/sizeDetails", async (req, res) =>{
+    if(req.query.link){
+        let  stream =  yt(req.query.link, {filter:'audioandvideo'});
+        let bytes = 0
+        stream.on("data", (chunk)=>{
+            bytes += chunk.length;
+        })
+        stream.on("end", ()=>{
+            console.log(bytes)
+            res.send(`${formatBytes(bytes)}`)
+        })
+    }    
+})
 app.listen(3000, ()=>{
     console.log("I'm running")
 })
