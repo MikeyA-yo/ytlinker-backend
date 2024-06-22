@@ -94,7 +94,7 @@ app.get("/download", (req, res)=>{
 app.get("/sizeDetails", async (req, res) =>{
     if(req.query.link){
         const filter = req.query.filter === 'mp3' ? 'audioonly':'audioandvideo' ;
-        const stream = yt(link, { filter: filter})
+        const stream = yt(req.query.link, { filter: filter})
         let bytes = 0
         stream.on("data", (chunk)=>{
             bytes += chunk.length;
