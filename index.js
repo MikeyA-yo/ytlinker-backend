@@ -7,11 +7,7 @@ const app = express();
 const corsOption = {
     origin:"http://localhost:5173/"
 }
-app.use(cors(
-    {
-        origin:"http://localhost:5173/"
-    }
-))
+app.use(cors(corsOption))
 
 function genTimeStamp(time){
     let hour;
