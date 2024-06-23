@@ -4,9 +4,9 @@ const path = require('path');
 const cors = require("cors");
 const express = require("express");
 const app = express();
-const corsOption = {
-    origin:"http://localhost:5173"
-}
+// const corsOption = {
+//     origin:"http://localhost:5173"
+// }
 app.use(cors())
 
 function genTimeStamp(time){
