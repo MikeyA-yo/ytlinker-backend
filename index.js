@@ -76,22 +76,23 @@ let filename = `${genRandom(12)}.mp4`
 app.get("/download", (req, res)=>{
     console.log(req.query)
     if(req.query.link){
-        const {link} = req.query
-        const filter = req.query.filter === 'mp3' ? 'audioonly':'audioandvideo' ;
-        const stream = yt(link, { filter: filter})
-        filename = filter === 'audioandvideo' ? filename : filename.replace('.mp4', '.mp3');
-        const writeStream = fs.createWriteStream(filename)
-        stream.pipe(writeStream)
-        .on("finish",()=>{
-            res.download(filename, (err)=>{
-                if(err){
+        res.send("Process discontiued")
+        // const {link} = req.query
+        // const filter = req.query.filter === 'mp3' ? 'audioonly':'audioandvideo' ;
+        // const stream = yt(link, { filter: filter})
+        // filename = filter === 'audioandvideo' ? filename : filename.replace('.mp4', '.mp3');
+        // const writeStream = fs.createWriteStream(filename)
+        // stream.pipe(writeStream)
+        // .on("finish",()=>{
+        //     res.download(filename, (err)=>{
+        //         if(err){
         
-                }else{
-                    console.log("yo")
-                    fs.unlinkSync(filename)
-                }
-            })
-        })
+        //         }else{
+        //             console.log("yo")
+        //             fs.unlinkSync(filename)
+        //         }
+        //     })
+        // })
     }else{
         res.status(400).send("Bad request")
     }
