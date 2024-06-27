@@ -50,7 +50,10 @@ function formatBytes(bytes, decimals = 2) {
 app.get("/", async (req, res)=>{
     if(req.query.link){
        try {
-        let  detail = await yt.getBasicInfo(req.query.link)
+        if(req.query.link.length < 12){
+            res.status(400).send("Confirm Link")
+        }
+        let detail = await yt.getBasicInfo(req.query.link)
         let relatedDetails = detail.videoDetails
         let timestamp = genTimeStamp(parseInt(relatedDetails.lengthSeconds));
         let image = relatedDetails.thumbnails
