@@ -11,5 +11,10 @@
         "src":"/(.*)",
         "dest": "index.js"
       }
-    ]
+    ],
+    "functions":{
+      "./*.js":{
+        "maxDuration": 60 
+      }
+    }
   }
