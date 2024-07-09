@@ -13,7 +13,7 @@
       }
     ],
     "functions":{
-      "./*.js":{
+      "/(.*)":{
         "maxDuration": 60 
       }
     }
