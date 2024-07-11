@@ -1,4 +1,4 @@
-const yt = require("ytdl-core");
+const yt = require("@distube/ytdl-core");
 const fs = require("node:fs")
 const path = require('path');
 const cors = require("cors");
@@ -79,12 +79,13 @@ let filename = `${genRandom(12)}.mp4`
 app.get("/download", (req, res)=>{
     console.log(req.query)
     if(req.query.link){
-        res.send("Process discontiued")
+         res.send("Process discontiued")
         // const {link} = req.query
         // const filter = req.query.filter === 'mp3' ? 'audioonly':'audioandvideo' ;
         // const stream = yt(link, { filter: filter})
         // filename = filter === 'audioandvideo' ? filename : filename.replace('.mp4', '.mp3');
         // const writeStream = fs.createWriteStream(filename)
+        // console.log(stream)
         // stream.pipe(writeStream)
         // .on("finish",()=>{
         //     res.download(filename, (err)=>{
