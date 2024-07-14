@@ -114,6 +114,8 @@ app.get("/sizeDetails", async (req, res) =>{
             console.log(bytes)
             res.send(`${formatBytes(bytes)}`)
         })
+    }else{
+        res.send("Wrong Usage")
     }    
 })
 app.listen(process.env.PORT || 3000, ()=>{
