@@ -77,7 +77,6 @@ function genRandom(len){
 }
 let filename = `${genRandom(12)}.mp4`
 app.get("/download", (req, res)=>{
-    console.log(req.query)
     if(req.query.link){
          
         const {link} = req.query
@@ -91,17 +90,6 @@ app.get("/download", (req, res)=>{
         stream.on("end", ()=>{
             res.end()
         })
-        // stream.pipe(writeStream)
-        // .on("finish",()=>{
-        //     res.download(filename, (err)=>{
-        //         if(err){
-        
-        //         }else{
-        //             console.log("yo")
-        //             fs.unlinkSync(filename)
-        //         }
-        //     })
-        // })
     }else{
         res.status(400).send("Bad request")
     }
