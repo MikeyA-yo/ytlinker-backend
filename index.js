@@ -15,6 +15,9 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
+const agent = yt.createProxyAgent({
+    uri:"http://152.26.229.66:9443"
+})
 function genTimeStamp(time){
     let hour;
     let minutes;
@@ -53,7 +56,7 @@ app.get("/", async (req, res)=>{
         if(req.query.link.length < 12){
             res.status(400).send("Confirm Link")
         }
-        let detail = await yt.getBasicInfo(req.query.link)
+        let detail = await yt.getBasicInfo(req.query.link, {agent:agent})
         let relatedDetails = detail.videoDetails
         let timestamp = genTimeStamp(parseInt(relatedDetails.lengthSeconds));
         let image = relatedDetails.thumbnails
@@ -81,7 +84,7 @@ app.get("/download", (req, res)=>{
          
         const {link} = req.query
         const filter = req.query.filter === 'mp3' ? 'audioonly':'audioandvideo' ;
-        const stream = yt(link, { filter: filter})
+        const stream = yt(link, { filter: filter, agent: agent})
         filename = filter === 'audioandvideo' ? filename : filename.replace('.mp4', '.mp3');
         //const writeStream = fs.createWriteStream(filename)
         stream.on("data",  (chunk)=>{
@@ -98,7 +101,7 @@ app.get("/download", (req, res)=>{
 app.get("/sizeDetails", async (req, res) =>{
     if(req.query.link){
         const filter = req.query.filter === 'mp3' ? 'audioonly':'audioandvideo' ;
-        const stream = yt(req.query.link, { filter: filter})
+        const stream = yt(req.query.link, { filter: filter, agent: agent})
         let bytes = 0
         stream.on("data", (chunk)=>{
             bytes += chunk.length;
@@ -111,6 +114,6 @@ app.get("/sizeDetails", async (req, res) =>{
         res.send("Wrong Usage")
     }    
 })
-app.listen(process.env.PORT || 3000, ()=>{
+app.listen(process.env.PORT || 3001, ()=>{
     console.log("I'm running")
 })
