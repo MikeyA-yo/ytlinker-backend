@@ -131,8 +131,10 @@ app.get("/sizeDetails", async (req, res) => {
       },
     });
     let bytes = 0;
+    console.log(stream)
     stream.on("data", (chunk) => {
       bytes += chunk.length;
+      console.log(bytes)
     });
     stream.on("end", () => {
       console.log(bytes);
