@@ -96,7 +96,7 @@ app.get("/download", (req, res) => {
   if (req.query.link) {
     const { link } = req.query;
     const filter = req.query.filter === "mp3" ? "audioonly" : "videoandaudio";
-    const stream = yt(link, { filter: filter, agent: agent, requestOptions: {
+    const stream = yt(link, { filter: filter, requestOptions: {
         headersTimeout: 1000 * 10, // 10 Seconds
         bodyTimeout: 1000 * 10, // 10 Seconds
         headers: {
@@ -121,7 +121,6 @@ app.get("/sizeDetails", async (req, res) => {
     const filter = req.query.filter === "mp3" ? "audioonly" : "videoandaudio";
     const stream = yt(req.query.link, {
       filter: filter,
-      agent: agent,
       requestOptions: {
         headersTimeout: 1000 * 10, // 10 Seconds
         bodyTimeout: 1000 * 10, // 10 Seconds
@@ -134,7 +133,6 @@ app.get("/sizeDetails", async (req, res) => {
     console.log(stream)
     stream.on("data", (chunk) => {
       bytes += chunk.length;
-      console.log(bytes)
     });
     stream.on("end", () => {
       console.log(bytes);
