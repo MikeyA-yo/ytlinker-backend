@@ -68,7 +68,7 @@ app.get("/", async (req, res) => {
       if (req.query.link.length < 12) {
         res.status(400).send("Confirm Link");
       }
-      let detail = await yt.getBasicInfo(req.query.link, { agent: agent });
+      let detail = await yt.getBasicInfo(req.query.link);
       let relatedDetails = detail.videoDetails;
       let timestamp = genTimeStamp(parseInt(relatedDetails.lengthSeconds));
       let image = relatedDetails.thumbnails;
