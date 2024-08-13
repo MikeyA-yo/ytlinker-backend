@@ -68,7 +68,7 @@ app.get("/", async (req, res) => {
       if (req.query.link.length < 12) {
         res.status(400).send("Confirm Link");
       }
-      let detail = await yt.getBasicInfo(req.query.link);
+      let detail = await yt.getBasicInfo(req.query.link, {agent});
       let relatedDetails = detail.videoDetails;
       let timestamp = genTimeStamp(parseInt(relatedDetails.lengthSeconds));
       let image = relatedDetails.thumbnails;
@@ -99,6 +99,7 @@ app.get("/download", (req, res) => {
     const stream = yt(link, { filter: filter, requestOptions: {
         headersTimeout: 1000 * 10, // 10 Seconds
         bodyTimeout: 1000 * 10, // 10 Seconds
+        agent,
         headers: {
           referer: "https://www.youtube.com/",
         },
@@ -121,6 +122,7 @@ app.get("/sizeDetails", async (req, res) => {
     const filter = req.query.filter === "mp3" ? "audioonly" : "videoandaudio";
     const stream = yt(req.query.link, {
       filter: filter,
+      agent,
       requestOptions: {
         headersTimeout: 1000 * 10, // 10 Seconds
         bodyTimeout: 1000 * 10, // 10 Seconds
